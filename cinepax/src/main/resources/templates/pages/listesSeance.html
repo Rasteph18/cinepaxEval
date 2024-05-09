@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/sidebar}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Listes séance</title>
+</head>
+<body>
+    
+    <div class="w-[calc(100%-256px)] min-h-screen ml-64 bg-gray-50 p-3" layout:fragment="content">
+        <div class="flex justify-center mt-3">
+            <h3>Liste des séances</h3>
+        </div>
+
+        <div class="w-full">
+            <div class="flex justify-center mt-4">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Salle</th>
+                            <th>Film</th>
+                            <th>Date de diffusion</th>
+                            <th>Heure</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr th:each="seance : ${listeSeance}">
+                            <td th:text="${seance.salle}"></td>
+                            <td th:text="${seance.film}"></td>
+                            <td th:text="${#dates.format(seance.dateDiffusion, 'dd MMMM yyyy')}"></td>
+                            <td th:text="${seance.heure}"></td>
+                            <th>
+                                <a th:href="@{/billet/page-achat-billet(idSeance=${seance.id})}" class="btn">Voir billets</a>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-center">
+                <div class="mr-2 mt-4 border shadow" th:each="i : ${#numbers.sequence(0, nbPage-1)}">
+                    <a th:href="@{/seance/liste-seance(numPage=${i})}" th:text="${i+1}" class="w-full p-4"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/sidebar}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Achat billet</title>
+</head>
+<body>
+    <div class="w-full md:w-[calc(100%-256px)] min-h-screen md:ml-64 p-3 bg-slate-50" layout:fragment="content">
+        <div class="mt-3">
+            <div class="flex justify-center">
+                <h3>Achat de billet : <span th:text="${seance.film}" class="underline decoration-dashed"></span></h3>
+            </div>
+            <div class="flex justify-center mt-2">
+                <h4 th:text="${#dates.format(seance.dateDiffusion, 'dd MMMM yyyy')}"></h4>
+            </div>
+        </div>
+
+        <div class="mt-6 w-full">
+            <form th:action="@{/billet/achat-billet}" method="post">
+                <div class="flex flex-wrap">
+                    <div th:each="billet : ${listeBillet}" th:class="'border-2 rounded-md p-2 mx-4 mt-3' + ${billet.etat == 20 ? ' border-green-600' : ' border-red-600'}">
+                        <input type="checkbox" name="idBillet" id="idBillet" th:value="${billet.id}" th:class="${billet.etat == 10 ? 'hidden' : ''}">
+
+                        <div>
+                            <div class="flex justify-center">
+                                <p th:text="${billet.range} + ' ' + ${billet.numero}"></p>
+                            </div>
+                            <div class="flex justify-center">
+                                <p th:text="${billet.prix} + ' ' + Ar"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-4">
+                    <button type="submit" class="btn">Acheter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
